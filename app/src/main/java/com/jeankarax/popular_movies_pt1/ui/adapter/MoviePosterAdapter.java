@@ -1,4 +1,4 @@
-package com.jeankarax.popular_movies_pt1;
+package com.jeankarax.popular_movies_pt1.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,24 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.jeankarax.popular_movies_pt1.Model.MovieData;
+import com.jeankarax.popular_movies_pt1.R;
+import com.jeankarax.popular_movies_pt1.model.MovieData;
 
 import java.util.List;
 
 public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.PosterViewHolder>{
 
-    private Context mCtx;
     private List<MovieData> mMovieList;
-    private LayoutInflater inflater;
 
-    public MoviePosterAdapter(Context ctx, List<MovieData> movieList){
-        mCtx = ctx;
+    public MoviePosterAdapter(List<MovieData> movieList){
         mMovieList = movieList;
     }
 
     @Override
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        Context ctx = parent.getContext();
+        int layoutIdForGridItem = R.layout.activity_movie_poster_item;
+        LayoutInflater inflater = LayoutInflater.from(ctx);
+
+        View view = inflater.inflate(layoutIdForGridItem, parent, false);
+        PosterViewHolder posterViewHolder = new PosterViewHolder(view);
+
+        return posterViewHolder;
     }
 
     @Override

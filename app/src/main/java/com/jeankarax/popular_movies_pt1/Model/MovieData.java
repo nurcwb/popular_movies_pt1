@@ -1,4 +1,4 @@
-package com.jeankarax.popular_movies_pt1.Model;
+package com.jeankarax.popular_movies_pt1.model;
 
 /**
  * Created by Jean Karax
