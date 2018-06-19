@@ -18,7 +18,7 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
 
     private List<MovieData> mMovieList;
 
-    private String mImageUrl = "http://image.tmdb.org/t/p/w185/";
+
     private Context mCtx;
 
     public MoviePosterAdapter(Context ctx, List<MovieData> movieList){
@@ -40,6 +40,7 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
 
     @Override
     public void onBindViewHolder(PosterViewHolder holder, int position) {
+        String mImageUrl = "http://image.tmdb.org/t/p/w185/";
         Uri movieUri = Uri.parse(mImageUrl).buildUpon().appendEncodedPath(mMovieList.get(position)
                 .getPoster_path()).build();
         Picasso.with(mCtx).load(movieUri).into(holder.ivMoviePoster);
