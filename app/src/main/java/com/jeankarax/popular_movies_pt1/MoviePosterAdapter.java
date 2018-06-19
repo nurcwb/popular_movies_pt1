@@ -7,16 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.jeankarax.popular_movies_pt1.Model.MovieData;
+
 import java.util.List;
 
 public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.PosterViewHolder>{
 
     private Context mCtx;
-    //TODO change the object of the List to a Movie data class
-    private List<String> mMovieList;
+    private List<MovieData> mMovieList;
     private LayoutInflater inflater;
 
-    public MoviePosterAdapter(Context ctx, List<String> movieList){
+    public MoviePosterAdapter(Context ctx, List<MovieData> movieList){
         mCtx = ctx;
         mMovieList = movieList;
     }
