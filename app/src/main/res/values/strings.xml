@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">popular_movies_pt1</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="movie_poster_description">Imagem com poster do filme</string>
 </resources>
