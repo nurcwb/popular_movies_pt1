@@ -18,6 +18,8 @@ public class MovieData {
     private String backdrop_path;
     private Number popularity;
 
+    public MovieData(){}
+
     public String getPoster_path() {
         return poster_path;
     }
