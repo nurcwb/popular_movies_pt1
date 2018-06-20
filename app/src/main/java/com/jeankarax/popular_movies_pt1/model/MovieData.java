@@ -1,10 +1,12 @@
 package com.jeankarax.popular_movies_pt1.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Jean Karax
  */
 
-public class MovieData {
+public class MovieData implements Serializable{
 
     private String poster_path;
     private boolean adult;
@@ -17,8 +19,6 @@ public class MovieData {
     private String title;
     private String backdrop_path;
     private Number popularity;
-
-    public MovieData(){}
 
     public String getPoster_path() {
         return poster_path;

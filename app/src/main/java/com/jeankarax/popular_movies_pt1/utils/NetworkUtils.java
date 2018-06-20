@@ -1,12 +1,10 @@
 package com.jeankarax.popular_movies_pt1.utils;
 
-import android.content.res.Resources;
 import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jeankarax.popular_movies_pt1.R;
-import com.jeankarax.popular_movies_pt1.model.MovieData;
+import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,11 +19,11 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private final static String THE_MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/";
-    private final static String SECTION_POPULAR = "get-popular-movies";
+    private final static String THE_MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private final static String SECTION_POPULAR = "popular";
     private final static String SECTION_TOP_RATED = "get-top-rated-movies";
     private final static String QUERY_PARAM = "api_key";
-    private final static String MY_API_KEY ="YOUR MOVIEDB API KEY HERE";
+    private final static String MY_API_KEY ="your moviedb api key here";
 
     public static URL buildURL(String sectionSelected){
         String section = null;
@@ -53,7 +51,7 @@ public class NetworkUtils {
         return url;
     }
 
-    public static MovieData getResponseFromHttpUrl(URL url) throws IOException {
+    public static MovieDataResponse getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -63,7 +61,7 @@ public class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                MovieData movieDataResponse;
+                MovieDataResponse movieDataResponse;
                 movieDataResponse = NetworkUtils.jsonToMovieData(scanner.next());
                 return movieDataResponse;
             } else {
@@ -74,12 +72,12 @@ public class NetworkUtils {
         }
     }
 
-    public static MovieData jsonToMovieData(String jsonResponse){
-        MovieData movieDataResponse;
+    public static MovieDataResponse jsonToMovieData(String jsonResponse){
+        MovieDataResponse movieDataResponse;
         GsonBuilder builder = new GsonBuilder();
 
         Gson gson = builder.create();
-        movieDataResponse = gson.fromJson(jsonResponse, MovieData.class);
+        movieDataResponse = gson.fromJson(jsonResponse, MovieDataResponse.class);
 
         return movieDataResponse;
     }
