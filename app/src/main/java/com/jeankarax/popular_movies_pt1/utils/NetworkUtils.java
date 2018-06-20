@@ -53,7 +53,7 @@ public class NetworkUtils {
         return url;
     }
 
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
+    public static MovieData getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -63,7 +63,9 @@ public class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                return scanner.next();
+                MovieData movieDataResponse;
+                movieDataResponse = NetworkUtils.jsonToMovieData(scanner.next());
+                return movieDataResponse;
             } else {
                 return null;
             }
@@ -72,7 +74,7 @@ public class NetworkUtils {
         }
     }
 
-    public MovieData jsonToMovieData(String jsonResponse){
+    public static MovieData jsonToMovieData(String jsonResponse){
         MovieData movieDataResponse;
         GsonBuilder builder = new GsonBuilder();
 
