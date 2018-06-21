@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">popular_movies_pt1</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Top Movies</string>
     <string name="movie_poster_description">Imagem com poster do filme</string>
-    <string name="poster_error_message">Sorry, we were not able to load the image</string>
+    <string name="movie_original_title">Original Title: %s</string>
+    <string name="movie_synopsis">Plot Synopsis: %s</string>
+    <string name="movie_user_rating">User Rating: %s</string>
+    <string name="movie_release_date">Release Date: %s</string>
 </resources>

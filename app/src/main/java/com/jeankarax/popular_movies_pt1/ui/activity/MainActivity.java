@@ -1,5 +1,6 @@
 package com.jeankarax.popular_movies_pt1.ui.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,13 +8,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jeankarax.popular_movies_pt1.R;
+import com.jeankarax.popular_movies_pt1.model.MovieData;
 import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
 import com.jeankarax.popular_movies_pt1.ui.adapter.MoviePosterAdapter;
 import com.jeankarax.popular_movies_pt1.utils.NetworkUtils;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviePosterAdapter.MoviePosterAdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mMoviePosterAdapter = new MoviePosterAdapter();
+        mMoviePosterAdapter = new MoviePosterAdapter(this);
         mRecyclerView.setAdapter(mMoviePosterAdapter);
 
         loadMovieData("popular");
@@ -38,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadMovieData(String section){
         new FetchMoviesTask().execute(section);
+    }
+
+    @Override
+    public void onClick(MovieData movieData) {
+        Intent intentToStartInfoActivity = new Intent(this, MovieInformationsActivity.class);
+        intentToStartInfoActivity.putExtra("MOVIE_DATA", movieData);
+        startActivity(intentToStartInfoActivity);
+
     }
 
     public class FetchMoviesTask extends AsyncTask<String, Void, MovieDataResponse>{
