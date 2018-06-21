@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.jeankarax.popular_movies_pt1.R;
 import com.jeankarax.popular_movies_pt1.model.MovieData;
-import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
 public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.PosterViewHolder>{
 
     private List<MovieData> mMovieList;
-    Context mCtx;
+    private Context mCtx;
 
     public void setmMovieList(List<MovieData> mMovieList) {
         this.mMovieList = mMovieList;
