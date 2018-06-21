@@ -11,6 +11,10 @@ import com.jeankarax.popular_movies_pt1.R;
 import com.jeankarax.popular_movies_pt1.model.MovieData;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MovieInformationsActivity extends AppCompatActivity {
 
     private ImageView ivMoviePoster;
@@ -42,7 +46,14 @@ public class MovieInformationsActivity extends AppCompatActivity {
         tvOriginalTitle.setText(getString(R.string.movie_original_title, mMovieData.getOriginal_title()));
         tvPlotSynopsis.setText(getString(R.string.movie_synopsis, mMovieData.getOverview()));
         tvUserRating.setText(getString(R.string.movie_user_rating, mMovieData.getVote_average()));
-        tvReleaseDate.setText(getString(R.string.movie_release_date, mMovieData.getRelease_date()));
 
+        SimpleDateFormat dtFrom = new SimpleDateFormat("yyyy-mm-dd");
+        try {
+            Date date = dtFrom.parse(mMovieData.getRelease_date());
+            SimpleDateFormat dtFormated = new SimpleDateFormat("dd/mm/yyyy");
+            tvReleaseDate.setText(getString(R.string.movie_release_date, dtFormated.format(date)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
