@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.jeankarax.popular_movies_pt1.R;
 import com.jeankarax.popular_movies_pt1.model.MovieData;
@@ -79,4 +82,28 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_movies_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_top_popular){
+            //mMoviePosterAdapter.setmMovieList(null);
+            loadMovieData("popular");
+            return true;
+        }
+        if(id == R.id.action_top_rated){
+            //mMoviePosterAdapter.setmMovieList(null);
+            loadMovieData("top rated");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
