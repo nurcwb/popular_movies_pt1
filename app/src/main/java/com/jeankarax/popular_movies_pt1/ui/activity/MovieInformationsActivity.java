@@ -38,6 +38,10 @@ public class MovieInformationsActivity extends AppCompatActivity {
         MovieData mMovieData = (MovieData) intentThatStartedThisActivity
                 .getSerializableExtra("MOVIE_DATA");
 
+         /*
+         * Here I used Picasso lib as recommended by the project guideline in order to render the
+         * movie poster into the ImageView component
+         */
         String mImageUrl = "http://image.tmdb.org/t/p/w500/";
         Uri movieUri = Uri.parse(mImageUrl).buildUpon()
                 .appendEncodedPath(mMovieData.getPoster_path()).build();

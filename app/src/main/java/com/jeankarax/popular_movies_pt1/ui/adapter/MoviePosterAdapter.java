@@ -55,6 +55,12 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
         String mImageUrl = "http://image.tmdb.org/t/p/w500/";
         Uri movieUri = Uri.parse(mImageUrl).buildUpon().appendEncodedPath(mMovieList.get(position)
                 .getPoster_path()).build();
+
+        /*
+         * Here I used Picasso lib as recommended by the project guideline in order to render the
+         * movie poster into the ImageView component
+         */
+
         Picasso.with(mCtx).load(movieUri).into(holder.ivMoviePoster);
         holder.ivMoviePoster.setAdjustViewBounds(true);
     }
