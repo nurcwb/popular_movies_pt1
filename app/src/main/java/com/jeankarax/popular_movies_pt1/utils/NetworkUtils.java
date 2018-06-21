@@ -25,13 +25,23 @@ public class NetworkUtils {
     private final static String QUERY_PARAM = "api_key";
     private final static String MY_API_KEY ="your moviedb api key here";
 
+    /*
+     *The following methods were based on the code used in the Android Development Nanodegree classes
+     */
+
+    /**
+     * Builds the URL used to talk to the moviedb server using an argument to group the list by its
+     * popularity or most rated, and your personal api key.
+     * @param sectionSelected
+     * @return The URL to use to query the moviedb service.
+     */
     public static URL buildURL(String sectionSelected){
         String section = null;
         switch (sectionSelected){
             case "popular":
                 section = SECTION_POPULAR;
                 break;
-            case "top rated":
+            case "top_rated":
                 section = SECTION_TOP_RATED;
                 break;
             default:
@@ -51,6 +61,14 @@ public class NetworkUtils {
         return url;
     }
 
+    /**
+     * This methods takes the JSON from the service response and parse it into a MovieDataResponse
+     * object to return it to the activity.
+     *
+     * @param url The URL to fetch the HTTP response from.
+     * @return a MovieDataResponse object populated from the JSON response
+     * @throws IOException Related to network and stream reading
+     */
     public static MovieDataResponse getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -71,6 +89,11 @@ public class NetworkUtils {
             urlConnection.disconnect();
         }
     }
+
+    /**
+     *I implemented GSON lib in order to simplify the JSON to object parse and mapping
+     *This lib code can be found in the following repository https://github.com/google/gson
+     */
 
     private static MovieDataResponse jsonToMovieData(String jsonResponse){
         MovieDataResponse movieDataResponse;

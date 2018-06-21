@@ -41,10 +41,20 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
     }
 
+    /**
+     * This method takes "section" as a param to sort the movies list and get it from the service.
+     * This param will vary accordingly to the user' selection on the menu
+     * @param section
+     */
     private void loadMovieData(String section){
         new FetchMoviesTask().execute(section);
     }
 
+    /**
+     * This method will override the RecyclerView item in order to handle the item click function.
+     * It will call the info activity passing a MovieData serializable object as param by intent.
+     * @param movieData
+     */
     @Override
     public void onClick(MovieData movieData) {
         Intent intentToStartInfoActivity = new Intent(this, MovieInformationsActivity.class);
@@ -94,13 +104,11 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_top_popular){
-            //mMoviePosterAdapter.setmMovieList(null);
             loadMovieData("popular");
             return true;
         }
         if(id == R.id.action_top_rated){
-            //mMoviePosterAdapter.setmMovieList(null);
-            loadMovieData("top rated");
+            loadMovieData("top_rated");
             return true;
         }
         return super.onOptionsItemSelected(item);
