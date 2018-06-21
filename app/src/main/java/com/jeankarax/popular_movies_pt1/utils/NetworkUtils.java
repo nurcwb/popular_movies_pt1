@@ -72,7 +72,7 @@ public class NetworkUtils {
         }
     }
 
-    public static MovieDataResponse jsonToMovieData(String jsonResponse){
+    private static MovieDataResponse jsonToMovieData(String jsonResponse){
         MovieDataResponse movieDataResponse;
         GsonBuilder builder = new GsonBuilder();
 
