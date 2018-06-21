@@ -21,7 +21,7 @@ public class NetworkUtils {
 
     private final static String THE_MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private final static String SECTION_POPULAR = "popular";
-    private final static String SECTION_TOP_RATED = "get-top-rated-movies";
+    private final static String SECTION_TOP_RATED = "top_rated";
     private final static String QUERY_PARAM = "api_key";
     private final static String MY_API_KEY ="your moviedb api key here";
 
