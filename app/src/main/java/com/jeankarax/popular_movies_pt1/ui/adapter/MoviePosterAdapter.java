@@ -61,7 +61,7 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
          * movie poster into the ImageView component
          */
 
-        Picasso.with(mCtx).load(movieUri).into(holder.ivMoviePoster);
+        Picasso.with(mCtx).load(movieUri).placeholder(R.drawable.landscape_image_svgrepo_com).error(R.drawable.error_svgrepo_com).into(holder.ivMoviePoster);
         holder.ivMoviePoster.setContentDescription(mCtx.getString(R.string.movie_poster_description, mMovieList.get(position).getOriginal_title()));
         holder.ivMoviePoster.setAdjustViewBounds(true);
     }

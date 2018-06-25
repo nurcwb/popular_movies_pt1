@@ -49,7 +49,7 @@ public class MovieInformationsActivity extends AppCompatActivity {
         String mImageUrl = "http://image.tmdb.org/t/p/w500/";
         Uri movieUri = Uri.parse(mImageUrl).buildUpon()
                 .appendEncodedPath(mMovieData.getPoster_path()).build();
-        Picasso.with(this).load(movieUri).into(ivMoviePoster);
+        Picasso.with(this).load(movieUri).placeholder(R.drawable.landscape_image_svgrepo_com).error(R.drawable.error_svgrepo_com).into(ivMoviePoster);
 
         tvOriginalTitle.setText(getString(R.string.movie_original_title, mMovieData.getOriginal_title()));
         tvPlotSynopsis.setText(getString(R.string.movie_synopsis, mMovieData.getOverview()));
