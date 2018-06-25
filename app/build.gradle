@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'MY_MOVIE_DB_API_KEY', MyMovieDbApiKey
+    }
 }
 
 def BUTTER_KNIFE_VERSION="8.5.1" //current version of butterknife

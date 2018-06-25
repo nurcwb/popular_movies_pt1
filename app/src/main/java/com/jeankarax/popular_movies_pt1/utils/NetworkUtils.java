@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jeankarax.popular_movies_pt1.BuildConfig;
 import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class NetworkUtils {
     private final static String SECTION_POPULAR = "popular";
     private final static String SECTION_TOP_RATED = "top_rated";
     private final static String QUERY_PARAM = "api_key";
-    private final static String MY_API_KEY ="your moviedb api key here";
+    private final static String MY_API_KEY = BuildConfig.MY_MOVIE_DB_API_KEY;
 
     /*
      *The following methods were based on the code used in the Android Development Nanodegree classes
