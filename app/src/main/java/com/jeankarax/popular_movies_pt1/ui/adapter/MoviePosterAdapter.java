@@ -62,6 +62,7 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
          */
 
         Picasso.with(mCtx).load(movieUri).into(holder.ivMoviePoster);
+        holder.ivMoviePoster.setContentDescription(mCtx.getString(R.string.movie_poster_description, mMovieList.get(position).getOriginal_title()));
         holder.ivMoviePoster.setAdjustViewBounds(true);
     }
 
