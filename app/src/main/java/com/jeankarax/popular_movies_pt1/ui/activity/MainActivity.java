@@ -18,9 +18,13 @@ import com.jeankarax.popular_movies_pt1.utils.NetworkUtils;
 
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements MoviePosterAdapter.MoviePosterAdapterOnClickHandler {
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.rv_poster)
+    RecyclerView mRecyclerView;
 
     private MoviePosterAdapter mMoviePosterAdapter;
 
@@ -28,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_poster);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
