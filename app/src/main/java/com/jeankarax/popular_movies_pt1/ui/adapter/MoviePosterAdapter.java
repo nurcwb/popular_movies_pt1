@@ -1,6 +1,7 @@
 package com.jeankarax.popular_movies_pt1.ui.adapter;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,9 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
 
         View view = inflater.inflate(layoutIdForGridItem, parent, false);
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 2;
+        if(parent.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            lp.height = parent.getMeasuredHeight() / 2;
+        }
         view.setLayoutParams(lp);
         PosterViewHolder posterViewHolder = new PosterViewHolder(view);
 
