@@ -1,11 +1,23 @@
 package com.jeankarax.popular_movies_pt1.utils;
 
+import android.app.VoiceInteractor;
+import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jeankarax.popular_movies_pt1.BuildConfig;
 import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +37,8 @@ public class NetworkUtils {
     private final static String SECTION_TOP_RATED = "top_rated";
     private final static String QUERY_PARAM = "api_key";
     private final static String MY_API_KEY = BuildConfig.MY_MOVIE_DB_API_KEY;
+
+    private  static MovieDataResponse movieDataResponse;
 
     /*
      *The following methods were based on the code used in the Android Development Nanodegree classes
@@ -65,7 +79,7 @@ public class NetworkUtils {
     /**
      * This methods takes the JSON from the service response and parse it into a MovieDataResponse
      * object to return it to the activity.
-     *
+     * @deprecated
      * @param url The URL to fetch the HTTP response from.
      * @return a MovieDataResponse object populated from the JSON response
      * @throws IOException Related to network and stream reading
@@ -106,4 +120,29 @@ public class NetworkUtils {
         return movieDataResponse;
     }
 
+    /**
+     * I implemented Volley lib as udacity recomendation in order to siplify the service calls.
+     * Also implemented EventBus lib in order to simplify the communication between the activity and
+     * the class where the call is in, instead of calling the service inside the activity.
+     * @param url
+     * @param ctx
+     */
+    public static void getMovieDataFromService(URL url, Context ctx){
+        VolleySingleton volleySingleton = VolleySingleton.getInstance(ctx);
+        RequestQueue queue = volleySingleton.getmRequestQueue();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                movieDataResponse = NetworkUtils.jsonToMovieData(response);
+                EventBus.getDefault().post(movieDataResponse);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Network error", error.getMessage());
+                EventBus.getDefault().post(error);
+            }
+        });
+        queue.add(stringRequest);
+    }
 }

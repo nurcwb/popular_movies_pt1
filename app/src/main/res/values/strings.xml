@@ -8,4 +8,5 @@
     <string name="movie_release_date">Release Date: %s</string>
     <string name="movie_top_popular">Top Popular</string>
     <string name="movie_top_rated">Top Rated</string>
+    <string name="connection_error_message">Connection error. Please verify your internet connection</string>
 </resources>
