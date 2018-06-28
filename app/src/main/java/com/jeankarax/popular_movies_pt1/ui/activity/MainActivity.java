@@ -1,7 +1,6 @@
 package com.jeankarax.popular_movies_pt1.ui.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,27 +8,38 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.jeankarax.popular_movies_pt1.R;
 import com.jeankarax.popular_movies_pt1.model.MovieData;
 import com.jeankarax.popular_movies_pt1.model.MovieDataResponse;
 import com.jeankarax.popular_movies_pt1.ui.adapter.MoviePosterAdapter;
 import com.jeankarax.popular_movies_pt1.utils.NetworkUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.net.URL;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MoviePosterAdapter.MoviePosterAdapterOnClickHandler {
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.rv_poster)
+    RecyclerView mRecyclerView;
 
     private MoviePosterAdapter mMoviePosterAdapter;
+    private MovieDataResponse mMovieDataResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_poster);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -42,12 +52,32 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
     }
 
     /**
+     * Registered the activity into the BusEvent thread in order to "listen" when the EventBus posts
+     * the MovieDataResponse object on it.
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    /**
+     * Unregister the activity, so it will not listen anymore when it is not showing
+     */
+    @Override
+    protected void onStop(){
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
      * This method takes "section" as a param to sort the movies list and get it from the service.
      * This param will vary accordingly to the user' selection on the menu
      * @param section
      */
     private void loadMovieData(String section){
-        new FetchMoviesTask().execute(section);
+        URL moviesRequestUrl = NetworkUtils.buildURL(section);
+        NetworkUtils.getMovieDataFromService(moviesRequestUrl, getApplicationContext());
     }
 
     /**
@@ -63,34 +93,25 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
     }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, MovieDataResponse>{
+    /**
+     * Subscribed a method for when the activity gets a MovieDataResponse object from the
+     * EventBus thread
+     * @param movieDataResponse
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMovieDataResponse(MovieDataResponse movieDataResponse){
+        mMovieDataResponse = movieDataResponse;
+        mMoviePosterAdapter.setmMovieList(movieDataResponse.getResults());
+    }
 
-        @Override
-        protected MovieDataResponse doInBackground(String... params) {
-
-            if (params.length == 0) {
-                return null;
-            }
-
-            String section = params[0];
-            URL moviesRequestUrl = NetworkUtils.buildURL(section);
-
-            try{
-                MovieDataResponse mMovieDataResponse = NetworkUtils.getResponseFromHttpUrl(moviesRequestUrl);
-                return mMovieDataResponse;
-            }catch (Exception e){
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(MovieDataResponse movieDataResponse){
-            if(movieDataResponse.getResults() != null){
-                mMoviePosterAdapter.setmMovieList(movieDataResponse.getResults());
-            }
-        }
+    /**
+     * Subscribed a method for when the call gets an error object (this error can be a connection
+     * error or a call error)
+     * @param error
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onErrorResponse(VolleyError error){
+        Toast.makeText(this, getString(R.string.connection_error_message), Toast.LENGTH_LONG).show();
     }
 
     @Override

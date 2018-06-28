@@ -1,6 +1,7 @@
 package com.jeankarax.popular_movies_pt1.ui.adapter;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,9 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
 
         View view = inflater.inflate(layoutIdForGridItem, parent, false);
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 2;
+        if(parent.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            lp.height = parent.getMeasuredHeight() / 2;
+        }
         view.setLayoutParams(lp);
         PosterViewHolder posterViewHolder = new PosterViewHolder(view);
 
@@ -61,7 +64,8 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
          * movie poster into the ImageView component
          */
 
-        Picasso.with(mCtx).load(movieUri).into(holder.ivMoviePoster);
+        Picasso.with(mCtx).load(movieUri).placeholder(R.drawable.landscape_image_svgrepo_com).error(R.drawable.error_svgrepo_com).into(holder.ivMoviePoster);
+        holder.ivMoviePoster.setContentDescription(mCtx.getString(R.string.movie_poster_description, mMovieList.get(position).getOriginal_title()));
         holder.ivMoviePoster.setAdjustViewBounds(true);
     }
 

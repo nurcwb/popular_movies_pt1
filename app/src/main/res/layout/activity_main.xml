@@ -7,6 +7,7 @@
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rv_poster"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 
