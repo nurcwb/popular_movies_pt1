@@ -8,4 +8,4 @@ The following libs were implemented:
 - Volley: In order to make an easy service call and service error handler;
 - EventBus: In order to make the communication between the app layers
 
-To run this project, you will need to set your api key into your gradle.properties file (this tutorial may help you with this, 
+To run this project, you will need to set your api key into your gradle.properties file
